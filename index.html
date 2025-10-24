@@ -1,30 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XGaming - Ultimate Gaming Experience</title>
+    <title>XGaming - প্রিমিয়াম গেমিং এক্সপেরিয়েন্স</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Top Header Bar -->
+    <div class="top-header">
+        <div class="container">
+            <div class="header-left">
+                <span>🎉 নতুন উইকেলি বোনাস: ১০০% পর্যন্ত ডিপোজিট বোনাস!</span>
+            </div>
+            <div class="header-right">
+                <a href="#"><i class="fas fa-headset"></i> সাপোর্ট</a>
+                <a href="#"><i class="fas fa-globe"></i> বাংলা</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="#"><i class="fas fa-gamepad"></i> XGaming</a>
+                <a href="#">
+                    <i class="fas fa-crown"></i>
+                    <span>XGaming</span>
+                </a>
             </div>
+            
             <div class="nav-menu">
-                <a href="#" class="nav-link active">Home</a>
-                <a href="#games" class="nav-link">Games</a>
-                <a href="#tournaments" class="nav-link">Tournaments</a>
-                <a href="#community" class="nav-link">Community</a>
-                <a href="admin.html" class="nav-link admin-btn">Admin</a>
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    হোম
+                </a>
+                <a href="#live-games" class="nav-link">
+                    <i class="fas fa-broadcast-tower"></i>
+                    লাইভ গেমস
+                </a>
+                <a href="#slots" class="nav-link">
+                    <i class="fas fa-dice"></i>
+                    স্লটস
+                </a>
+                <a href="#sports" class="nav-link">
+                    <i class="fas fa-basketball-ball"></i>
+                    স্পোর্টস
+                </a>
+                <a href="#casino" class="nav-link">
+                    <i class="fas fa-coins"></i>
+                    ক্যাসিনো
+                </a>
+                <a href="#promotions" class="nav-link">
+                    <i class="fas fa-gift"></i>
+                    প্রোমোশন
+                </a>
             </div>
+
             <div class="nav-actions">
-                <button class="btn-login">Login</button>
-                <button class="btn-signup">Sign Up</button>
+                <button class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    লগইন
+                </button>
+                <button class="btn-signup">
+                    <i class="fas fa-user-plus"></i>
+                    রেজিস্টার
+                </button>
+                <div class="balance-widget">
+                    <i class="fas fa-wallet"></i>
+                    <span>₳ 0.00</span>
+                </div>
             </div>
+
             <div class="hamburger">
                 <span></span>
                 <span></span>
@@ -33,114 +82,423 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Experience Gaming <span class="highlight">Like Never Before</span></h1>
-            <p class="hero-description">Join millions of players in the ultimate gaming platform. Compete, connect, and conquer in our vast collection of games.</p>
-            <div class="hero-buttons">
-                <button class="btn-primary">Explore Games</button>
-                <button class="btn-secondary">Join Tournament</button>
-            </div>
-            <div class="hero-stats">
-                <div class="stat">
-                    <h3>500K+</h3>
-                    <p>Active Players</p>
+    <!-- Hero Banner with Live Games -->
+    <section class="hero-banner">
+        <div class="banner-content">
+            <div class="banner-text">
+                <h1 class="banner-title">
+                    <span class="gradient-text">বাংলাদেশের #১</span>
+                    <br>গেমিং প্ল্যাটফর্ম
+                </h1>
+                <p class="banner-subtitle">লাইভ ক্যাসিনো, স্পোর্টস বেটিং, স্লট গেমস এবং আরও অনেক কিছু</p>
+                
+                <div class="banner-features">
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <span>ইনস্ট্যান্ট উইথড্র</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>১০০% সিকিউর</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>মোবাইল ফ্রেন্ডলি</span>
+                    </div>
                 </div>
-                <div class="stat">
-                    <h3>120+</h3>
-                    <p>Games Available</p>
-                </div>
-                <div class="stat">
-                    <h3>$2M+</h3>
-                    <p>Tournament Prizes</p>
-                </div>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div class="floating-card card-1">
-                <img src="images/game1.jpg" alt="Game 1">
-                <div class="card-info">
-                    <h4>Cyber Assault</h4>
-                    <p>FPS • 4.8 ★</p>
-                </div>
-            </div>
-            <div class="floating-card card-2">
-                <img src="images/game2.jpg" alt="Game 2">
-                <div class="card-info">
-                    <h4>Mythic Realms</h4>
-                    <p>RPG • 4.9 ★</p>
+
+                <div class="banner-actions">
+                    <button class="btn-deposit">
+                        <i class="fas fa-plus"></i>
+                        ডিপোজিট করুন
+                    </button>
+                    <button class="btn-play-now">
+                        <i class="fas fa-play"></i>
+                        এখনই খেলুন
+                    </button>
                 </div>
             </div>
-            <div class="floating-card card-3">
-                <img src="images/game3.jpg" alt="Game 3">
-                <div class="card-info">
-                    <h4>Racing Extreme</h4>
-                    <p>Racing • 4.7 ★</p>
+
+            <div class="banner-games">
+                <div class="live-games-carousel">
+                    <div class="game-card featured">
+                        <div class="game-badge live">LIVE</div>
+                        <div class="game-image" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                            <i class="fas fa-dragon"></i>
+                        </div>
+                        <div class="game-info">
+                            <h4>আন্ডারড্রাগন</h4>
+                            <p>মেগা হিল গেম</p>
+                            <div class="game-players">
+                                <i class="fas fa-users"></i>
+                                ২,৪৫৮ অনলাইন
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-badge hot">HOT</div>
+                        <div class="game-image" style="background: linear-gradient(135deg, #4834d4, #686de0);">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="game-info">
+                            <h4>গেটস অফ অলিম্পাস</h4>
+                            <p>বেস্ট স্লট</p>
+                            <div class="game-players">
+                                <i class="fas fa-users"></i>
+                                ১,৮৯২ অনলাইন
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Featured Games -->
-    <section id="games" class="featured-games">
+    <!-- Quick Access Bar -->
+    <section class="quick-access">
         <div class="container">
-            <h2 class="section-title">Featured Games</h2>
-            <div class="games-filter">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="fps">FPS</button>
-                <button class="filter-btn" data-filter="rpg">RPG</button>
-                <button class="filter-btn" data-filter="racing">Racing</button>
-                <button class="filter-btn" data-filter="sports">Sports</button>
-            </div>
-            <div class="games-grid" id="gamesContainer">
-                <!-- Games will be loaded dynamically -->
+            <div class="access-grid">
+                <div class="access-item">
+                    <div class="access-icon deposit">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <span>ডিপোজিট</span>
+                </div>
+                <div class="access-item">
+                    <div class="access-icon withdraw">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <span>উইথড্র</span>
+                </div>
+                <div class="access-item">
+                    <div class="access-icon bonus">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <span>বোনাস</span>
+                </div>
+                <div class="access-item">
+                    <div class="access-icon promo">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <span>প্রোমো</span>
+                </div>
+                <div class="access-item">
+                    <div class="access-icon vip">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <span>VIP</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Tournaments Section -->
-    <section id="tournaments" class="tournaments">
+    <!-- Live Casino Section -->
+    <section id="live-games" class="live-casino">
         <div class="container">
-            <h2 class="section-title">Live Tournaments</h2>
-            <div class="tournaments-grid" id="tournamentsContainer">
-                <!-- Tournaments will be loaded dynamically -->
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-broadcast-tower"></i>
+                    লাইভ ক্যাসিনো
+                </h2>
+                <a href="#" class="view-all">
+                    সব দেখুন <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
-        </div>
-    </section>
 
-    <!-- Community Section -->
-    <section id="community" class="community">
-        <div class="container">
-            <h2 class="section-title">Gaming Community</h2>
-            <div class="community-content">
-                <div class="community-stats">
-                    <div class="community-stat">
-                        <i class="fas fa-users"></i>
-                        <div>
-                            <h3>Join Our Discord</h3>
-                            <p>Connect with 50K+ gamers</p>
+            <div class="games-grid">
+                <div class="game-card live">
+                    <div class="game-badge live">LIVE</div>
+                    <div class="game-image">
+                        <div class="provider-badge">Evolution</div>
+                        <div class="game-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                                খেলুন
+                            </button>
                         </div>
                     </div>
-                    <div class="community-stat">
-                        <i class="fas fa-trophy"></i>
-                        <div>
-                            <h3>Weekly Events</h3>
-                            <p>Compete for prizes</p>
-                        </div>
-                    </div>
-                    <div class="community-stat">
-                        <i class="fas fa-stream"></i>
-                        <div>
-                            <h3>Live Streaming</h3>
-                            <p>Watch top players</p>
+                    <div class="game-info">
+                        <h4>লাইভ বাকারা</h4>
+                        <div class="game-stats">
+                            <span class="players">১,২৩৪</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i> ৪.৯
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="leaderboard">
-                    <h3>Top Players</h3>
-                    <div class="leaderboard-list" id="leaderboardContainer">
-                        <!-- Leaderboard will be loaded dynamically -->
+
+                <div class="game-card live">
+                    <div class="game-badge live">LIVE</div>
+                    <div class="game-image">
+                        <div class="provider-badge">Pragmatic</div>
+                        <div class="game-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                                খেলুন
+                            </button>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        <h4>লাইভ রুলেট</h4>
+                        <div class="game-stats">
+                            <span class="players">৯৮৭</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i> ৪.৮
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-card live">
+                    <div class="game-badge new">NEW</div>
+                    <div class="game-image">
+                        <div class="provider-badge">Ezugi</div>
+                        <div class="game-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                                খেলুন
+                            </button>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        <h4>লাইভ ব্ল্যাকজ্যাক</h4>
+                        <div class="game-stats">
+                            <span class="players">৭৬৫</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i> ৪.৭
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-card live">
+                    <div class="game-badge hot">HOT</div>
+                    <div class="game-image">
+                        <div class="provider-badge">Sexy</div>
+                        <div class="game-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                                খেলুন
+                            </button>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        <h4>লাইভ ড্রাগন টাইগার</h4>
+                        <div class="game-stats">
+                            <span class="players">১,৫৬৭</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i> ৪.৯
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slots Section -->
+    <section id="slots" class="slots-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-dice"></i>
+                    পপুলার স্লট গেমস
+                </h2>
+                <div class="section-filters">
+                    <button class="filter-btn active">সব</button>
+                    <button class="filter-btn">পপুলার</button>
+                    <button class="filter-btn">নতুন</button>
+                    <button class="filter-btn">মেগা হিল</button>
+                </div>
+            </div>
+
+            <div class="slots-grid">
+                <div class="slot-card">
+                    <div class="slot-image">
+                        <div class="jackpot-badge">MEGA JACKPOT</div>
+                        <div class="slot-overlay">
+                            <button class="demo-btn">ডেমো</button>
+                            <button class="real-btn">রিয়েল</button>
+                        </div>
+                    </div>
+                    <div class="slot-info">
+                        <h4>সুইট বোনানজা</h4>
+                        <div class="slot-features">
+                            <span class="feature rtp">RTP: 96.5%</span>
+                            <span class="feature volatility">হাই</span>
+                        </div>
+                        <div class="provider">Pragmatic Play</div>
+                    </div>
+                </div>
+
+                <div class="slot-card">
+                    <div class="slot-image">
+                        <div class="jackpot-badge">PROGRESSIVE</div>
+                        <div class="slot-overlay">
+                            <button class="demo-btn">ডেমো</button>
+                            <button class="real-btn">রিয়েল</button>
+                        </div>
+                    </div>
+                    <div class="slot-info">
+                        <h4>গেটস অফ অলিম্পাস</h4>
+                        <div class="slot-features">
+                            <span class="feature rtp">RTP: 96.5%</span>
+                            <span class="feature volatility">মিডিয়াম</span>
+                        </div>
+                        <div class="provider">Pragmatic Play</div>
+                    </div>
+                </div>
+
+                <div class="slot-card">
+                    <div class="slot-image">
+                        <div class="bonus-badge">FREE SPINS</div>
+                        <div class="slot-overlay">
+                            <button class="demo-btn">ডেমো</button>
+                            <button class="real-btn">রিয়েল</button>
+                        </div>
+                    </div>
+                    <div class="slot-info">
+                        <h4>বুক অফ ডেড</h4>
+                        <div class="slot-features">
+                            <span class="feature rtp">RTP: 96.3%</span>
+                            <span class="feature volatility">হাই</span>
+                        </div>
+                        <div class="provider">Pragmatic Play</div>
+                    </div>
+                </div>
+
+                <div class="slot-card">
+                    <div class="slot-image">
+                        <div class="new-badge">NEW</div>
+                        <div class="slot-overlay">
+                            <button class="demo-btn">ডেমো</button>
+                            <button class="real-btn">রিয়েল</button>
+                        </div>
+                    </div>
+                    <div class="slot-info">
+                        <h4>ফ্রুট পার্টি</h4>
+                        <div class="slot-features">
+                            <span class="feature rtp">RTP: 96.5%</span>
+                            <span class="feature volatility">লো</span>
+                        </div>
+                        <div class="provider">Pragmatic Play</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sports Betting Section -->
+    <section id="sports" class="sports-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-basketball-ball"></i>
+                    লাইভ স্পোর্টস বেটিং
+                </h2>
+                <div class="sports-tabs">
+                    <button class="sport-tab active">ফুটবল</button>
+                    <button class="sport-tab">ক্রিকেট</button>
+                    <button class="sport-tab">বাস্কেটবল</button>
+                    <button class="sport-tab">টেনিস</button>
+                </div>
+            </div>
+
+            <div class="matches-grid">
+                <div class="match-card">
+                    <div class="match-header">
+                        <span class="league">প্রিমিয়ার লিগ</span>
+                        <span class="time">২০:৩০</span>
+                    </div>
+                    <div class="teams">
+                        <div class="team">
+                            <div class="team-logo">MUN</div>
+                            <span class="team-name">ম্যানচেস্টার ইউনাইটেড</span>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-logo">MCI</div>
+                            <span class="team-name">ম্যানচেস্টার সিটি</span>
+                        </div>
+                    </div>
+                    <div class="odds">
+                        <button class="odd-btn">১.৮৫</button>
+                        <button class="odd-btn">৩.৪০</button>
+                        <button class="odd-btn">২.১০</button>
+                    </div>
+                </div>
+
+                <div class="match-card">
+                    <div class="match-header">
+                        <span class="league">আইপিএল ২০২৪</span>
+                        <span class="time">১৯:০০</span>
+                    </div>
+                    <div class="teams">
+                        <div class="team">
+                            <div class="team-logo">MI</div>
+                            <span class="team-name">মুম্বাই ইন্ডিয়ান্স</span>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-logo">CSK</div>
+                            <span class="team-name">চেন্নাই সুপার কিংস</span>
+                        </div>
+                    </div>
+                    <div class="odds">
+                        <button class="odd-btn">১.৯৫</button>
+                        <button class="odd-btn">১.৯৫</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promotions Section -->
+    <section id="promotions" class="promotions-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-gift"></i>
+                    এক্সক্লুসিভ প্রোমোশন
+                </h2>
+            </div>
+
+            <div class="promotions-grid">
+                <div class="promo-card welcome">
+                    <div class="promo-badge">WELCOME</div>
+                    <div class="promo-content">
+                        <h3>১০০% উইলকাম বোনাস</h3>
+                        <p>প্রথম ডিপোজিটে ১০০% বোনাস পান ₳১০,০০০ পর্যন্ত</p>
+                        <button class="promo-btn">ক্লেইম করুন</button>
+                    </div>
+                </div>
+
+                <div class="promo-card deposit">
+                    <div class="promo-badge">HOT</div>
+                    <div class="promo-content">
+                        <h3>৫০% ডিপোজিট বোনাস</h3>
+                        <p>সপ্তাহের প্রতিদিন ৫০% এক্সট্রা বোনাস</p>
+                        <button class="promo-btn">ক্লেইম করুন</button>
+                    </div>
+                </div>
+
+                <div class="promo-card cashback">
+                    <div class="promo-badge">CASHBACK</div>
+                    <div class="promo-content">
+                        <h3>১৫% ক্যাশব্যাক</h3>
+                        <p>সাপ্তাহিক লস থেকে ১৫% ক্যাশব্যাক</p>
+                        <button class="promo-btn">ক্লেইম করুন</button>
+                    </div>
+                </div>
+
+                <div class="promo-card vip">
+                    <div class="promo-badge">VIP</div>
+                    <div class="promo-content">
+                        <h3>VIP প্রোগ্রাম</h3>
+                        <p>এক্সক্লুসিভ বেনিফিট এবং পার্সোনাল অ্যাকাউন্ট ম্যানেজার</p>
+                        <button class="promo-btn">জয়েন করুন</button>
                     </div>
                 </div>
             </div>
@@ -152,89 +510,106 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3><i class="fas fa-gamepad"></i> XGaming</h3>
-                    <p>The ultimate platform for gamers to connect, compete, and conquer.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-discord"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-twitch"></i></a>
+                    <h3>
+                        <i class="fas fa-crown"></i>
+                        XGaming
+                    </h3>
+                    <p>বাংলাদেশের সবচেয়ে বিশ্বস্ত এবং জনপ্রিয় গেমিং প্ল্যাটফর্ম।</p>
+                    <div class="payment-methods">
+                        <div class="payment-title">পেমেন্ট মেথডস:</div>
+                        <div class="payment-icons">
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-mastercard"></i>
+                            <i class="fas fa-mobile-alt"></i>
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
                     </div>
                 </div>
+
                 <div class="footer-section">
-                    <h4>Quick Links</h4>
+                    <h4>গেমস</h4>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#games">Games</a></li>
-                        <li><a href="#tournaments">Tournaments</a></li>
-                        <li><a href="#community">Community</a></li>
+                        <li><a href="#">লাইভ ক্যাসিনো</a></li>
+                        <li><a href="#">স্লট গেমস</a></li>
+                        <li><a href="#">স্পোর্টস বেটিং</a></li>
+                        <li><a href="#">পোকার</a></li>
+                        <li><a href="#">আর্কেড</a></li>
                     </ul>
                 </div>
+
                 <div class="footer-section">
-                    <h4>Support</h4>
+                    <h4>সাপোর্ট</h4>
                     <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#"><i class="fab fa-whatsapp"></i> হোয়াটসঅ্যাপ</a></li>
+                        <li><a href="#"><i class="fas fa-headset"></i> লাইভ চ্যাট</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +৮৮০১৬XX-XXXXXX</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> support@xgaming.com</a></li>
                     </ul>
                 </div>
+
                 <div class="footer-section">
-                    <h4>Newsletter</h4>
-                    <p>Subscribe to get updates on new games and tournaments.</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your email address">
-                        <button type="submit">Subscribe</button>
-                    </form>
+                    <h4>লিগাল</h4>
+                    <ul>
+                        <li><a href="#">টার্মস অ্যান্ড কন্ডিশন</a></li>
+                        <li><a href="#">প্রাইভেসি পলিসি</a></li>
+                        <li><a href="#">রেস্পন্সিবল গেমিং</a></li>
+                        <li><a href="#">KYC পলিসি</a></li>
+                    </ul>
                 </div>
             </div>
+
             <div class="footer-bottom">
-                <p>&copy; 2023 XGaming. All rights reserved.</p>
+                <div class="security-badges">
+                    <div class="badge">
+                        <i class="fas fa-lock"></i>
+                        <span>SSL সিকিউরড</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>লাইসেন্সড</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-user-shield"></i>
+                        <span>ডেটা প্রোটেক্টেড</span>
+                    </div>
+                </div>
+                <p>&copy; ২০২৪ XGaming. Curacao eGaming License #XXXXXX. ১৮+ Only.</p>
             </div>
         </div>
     </footer>
 
     <!-- Login Modal -->
     <div class="modal" id="loginModal">
-        <div class="modal-content">
+        <div class="modal-content auth-modal">
             <span class="close">&times;</span>
-            <h2>Login to XGaming</h2>
+            <div class="auth-header">
+                <h2>লগইন করুন</h2>
+                <p>আপনার অ্যাকাউন্টে অ্যাক্সেস পান</p>
+            </div>
             <form class="auth-form">
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
+                    <label for="username">ইউজারনেম বা ইমেইল</label>
+                    <input type="text" id="username" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">পাসওয়ার্ড</label>
                     <input type="password" id="password" required>
                 </div>
-                <button type="submit" class="btn-primary">Login</button>
+                <div class="form-options">
+                    <label class="checkbox">
+                        <input type="checkbox" checked>
+                        <span>রিমেমবার মি</span>
+                    </label>
+                    <a href="#" class="forgot-password">পাসওয়ার্ড ভুলে গেছেন?</a>
+                </div>
+                <button type="submit" class="btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt"></i>
+                    লগইন করুন
+                </button>
             </form>
-            <p>Don't have an account? <a href="#" class="switch-to-signup">Sign Up</a></p>
-        </div>
-    </div>
-
-    <!-- Signup Modal -->
-    <div class="modal" id="signupModal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Join XGaming</h2>
-            <form class="auth-form">
-                <div class="form-group">
-                    <label for="signup-username">Username</label>
-                    <input type="text" id="signup-username" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-email">Email</label>
-                    <input type="email" id="signup-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" required>
-                </div>
-                <button type="submit" class="btn-primary">Create Account</button>
-            </form>
-            <p>Already have an account? <a href="#" class="switch-to-login">Login</a></p>
+            <div class="auth-footer">
+                <p>অ্যাকাউন্ট নেই? <a href="#" class="switch-to-signup">এখনই রেজিস্টার করুন</a></p>
+            </div>
         </div>
     </div>
 
