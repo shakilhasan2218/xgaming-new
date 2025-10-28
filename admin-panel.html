@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XGaming - Master Admin Panel</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- Security Check Script -->
+    <script>
+        // Security Check
+        const adminSession = localStorage.getItem('adminSession');
+        if (!adminSession) {
+            window.location.href = 'admin-login.html';
+        }
+
+        const session = JSON.parse(adminSession);
+        const loginTime = new Date(session.loginTime);
+        const currentTime = new Date();
+        const hoursDiff = (currentTime - loginTime) / (1000 * 60 * 60);
+
+        // Auto logout after 8 hours
+        if (hoursDiff > 8) {
+            localStorage.removeItem('adminSession');
+            window.location.href = 'admin-login.html';
+        }
+
+        function getRoleName(role) {
+            const roles = {
+                'master': 'মাস্টার এডমিন',
+                'super': 'সুপার এডমイン', 
+                'affiliate': 'অ্যাফিলিয়েট ম্যানেজার'
+            };
+            return roles[role] || 'এডমিন';
+        }
+
+        function logout() {
+            localStorage.removeItem('adminSession');
+            window.location.href = 'admin-login.html';
+        }
+
+        function switchAdminRole(role) {
+            // In real app, you'd verify permissions first
+            alert(`এডমিন রোল switched to ${getRoleName(role)}`);
+        }
+    </script>
+
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container">
+            <div class="admin-nav">
+                <div class="admin-logo">
+                    <i class="fas fa-crown"></i>
+                    <span>XGaming Master Admin</span>
+                    <span class="version">v2.0</span>
+                </div>
+                <div class="admin-actions">
+                    <div class="admin-info">
+                        <span class="admin-name" id="current-admin-name">Loading...</span>
+                        <span class="admin-role" id="current-admin-role">Loading...</span>
+                    </div>
+                    <div class="admin-controls">
+                        <button class="btn-notification" onclick="showNotifications()">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-count">3</span>
+                        </button>
+                        <a href="index.html" class="btn-view-site">
+                            <i class="fas fa-external-link-alt"></i>
+                            Main Site
+                        </a>
+                        <div class="admin-dropdown">
+                            <button class="btn-admin-menu">
+                                <i class="fas fa-user-shield"></i>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="#" onclick="switchAdminRole('super')"><i class="fas fa-user-cog"></i> Super Admin</a>
+                                <a href="#" onclick="switchAdminRole('master')"><i class="fas fa-user-shield"></i> Master Admin</a>
+                                <a href="#" onclick="switchAdminRole('affiliate')"><i class="fas fa-users"></i> Affiliate Manager</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Sidebar -->
+    <nav class="admin-sidebar">
+        <div class="sidebar-header">
+            <div class="admin-level-badge" id="admin-level-badge">
+                <i class="fas fa-crown"></i>
+                <span>MASTER</span>
+            </div>
+        </div>
+        
+        <div class="sidebar-menu">
+            <!-- Dashboard -->
+            <a href="#dashboard" class="menu-item active" onclick="showSection('dashboard')">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>ড্যাশবোর্ড</span>
+            </a>
+
+            <!-- User Management -->
+            <div class="menu-category">ইউজার ম্যানেজমেন্ট</div>
+            <a href="#users" class="menu-item" onclick="showSection('users')">
+                <i class="fas fa-users"></i>
+                <span>সব ইউজার</span>
+                <span class="menu-badge" id="users-count">0</span>
+            </a>
+
+            <!-- Financial Management -->
+            <div class="menu-category">ফাইন্যান্সিয়াল</div>
+            <a href="#transactions" class="menu-item" onclick="showSection('transactions')">
+                <i class="fas fa-exchange-alt"></i>
+                <span>ট্রানজেকশনস</span>
+            </a>
+            <a href="#deposits" class="menu-item" onclick="showSection('deposits')">
+                <i class="fas fa-wallet"></i>
+                <span>ডিপোজিটস</span>
+                <span class="menu-badge pending" id="pending-deposits">0</span>
+            </a>
+            <a href="#withdrawals" class="menu-item" onclick="showSection('withdrawals')">
+                <i class="fas fa-money-check"></i>
+                <span>উইথড্রয়ালস</span>
+                <span class="menu-badge pending" id="pending-withdrawals">0</span>
+            </a>
+
+            <!-- Game Management -->
+            <div class="menu-category">গেম ম্যানেজমেন্ট</div>
+            <a href="#games" class="menu-item" onclick="showSection('games')">
+                <i class="fas fa-gamepad"></i>
+                <span>সব গেমস</span>
+            </a>
+
+            <!-- Marketing -->
+            <div class="menu-category">মার্কেটিং</div>
+            <a href="#bonus" class="menu-item" onclick="showSection('bonus')">
+                <i class="fas fa-gift"></i>
+                <span>বোনাস ম্যানেজমেন্ট</span>
+            </a>
+
+            <!-- System -->
+            <div class="menu-category">সিস্টেম</div>
+            <a href="#reports" class="menu-item" onclick="showSection('reports')">
+                <i class="fas fa-chart-bar"></i>
+                <span>রিপোর্টস</span>
+            </a>
+            <a href="#settings" class="menu-item" onclick="showSection('settings')">
+                <i class="fas fa-cogs"></i>
+                <span>সিস্টেম সেটিংস</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <div class="container">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="admin-section active">
+                <div class="section-header">
+                    <h1>মাস্টার ড্যাশবোর্ড</h1>
+                    <p>রিয়েল-টাইম ক্যাসিনো পারফরম্যান্স ওভারভিউ</p>
+                    <div class="time-display" id="live-time"></div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="quick-stats">
+                    <div class="quick-stat">
+                        <i class="fas fa-users"></i>
+                        <div>
+                            <h3 id="total-active-users">0</h3>
+                            <span>অ্যাক্টিভ ইউজার</span>
+                        </div>
+                    </div>
+                    <div class="quick-stat">
+                        <i class="fas fa-gamepad"></i>
+                        <div>
+                            <h3 id="total-active-games">0</h3>
+                            <span>অ্যাক্টিভ গেমস</span>
+                        </div>
+                    </div>
+                    <div class="quick-stat">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <div>
+                            <h3 id="total-revenue-today">₳ 0</h3>
+                            <span>আজকের রেভিনিউ</span>
+                        </div>
+                    </div>
+                    <div class="quick-stat">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h3 id="total-admins">0</h3>
+                            <span>অ্যাক্টিভ এডমিন</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>কুইক অ্যাকশনস</h3>
+                    <div class="action-grid">
+                        <button class="action-btn" onclick="showSection('users')">
+                            <i class="fas fa-user-plus"></i>
+                            <span>নতুন ইউজার</span>
+                        </button>
+                        <button class="action-btn" onclick="manualDeposit()">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>ম্যানুয়াল ডিপোজিট</span>
+                        </button>
+                        <button class="action-btn" onclick="manualWithdrawal()">
+                            <i class="fas fa-minus-circle"></i>
+                            <span>ম্যানুয়াল উইথড্র</span>
+                        </button>
+                        <button class="action-btn" onclick="createBonus()">
+                            <i class="fas fa-gift"></i>
+                            <span>বোনাস তৈরি</span>
+                        </button>
+                        <button class="action-btn" onclick="addNewGame()">
+                            <i class="fas fa-dice"></i>
+                            <span>নতুন গেম</span>
+                        </button>
+                        <button class="action-btn" onclick="generateReport()">
+                            <i class="fas fa-file-export"></i>
+                            <span>রিপোর্ট জেনারেট</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <h3>সাম্প্রতিক এক্টিভিটি</h3>
+                    <div class="activity-list" id="activity-list">
+                        <p>লোড হচ্ছে...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Management Section -->
+            <section id="users" class="admin-section">
+                <div class="section-header">
+                    <h1>ইউজার ম্যানেজমেন্ট</h1>
+                    <div class="header-actions">
+                        <button class="btn-primary" onclick="showUserModal()">
+                            <i class="fas fa-user-plus"></i>
+                            নতুন ইউজার
+                        </button>
+                        <button class="btn-secondary" onclick="exportUsers()">
+                            <i class="fas fa-download"></i>
+                            এক্সপোর্ট
+                        </button>
+                    </div>
+                </div>
+
+                <div class="users-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ইউজার আইডি</th>
+                                <th>ইউজারনেম</th>
+                                <th>ব্যালেন্স</th>
+                                <th>লেভেল</th>
+                                <th>স্ট্যাটাস</th>
+                                <th>রেজিস্টার ডেট</th>
+                                <th>একশনস</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <tr>
+                                <td colspan="7">লোড হচ্ছে...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Add other sections similarly... -->
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUserModal()">&times;</span>
+            <h2>নতুন ইউজার তৈরি করুন</h2>
+            <form id="userForm">
+                <div class="form-group">
+                    <label for="username">ইউজারনেম *</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">ইমেইল *</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="initialBalance">ইনিশিয়াল ব্যালেন্স</label>
+                    <input type="number" id="initialBalance" value="0">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeUserModal()">বাতিল</button>
+                    <button type="submit" class="btn-primary">ইউজার তৈরি করুন</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+    
+    <!-- Initialize Admin Info -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('current-admin-name').textContent = session.username;
+            document.getElementById('current-admin-role').textContent = getRoleName(session.role);
+            
+            const badge = document.getElementById('admin-level-badge');
+            if (badge) {
+                const roleIcon = session.role === 'master' ? 'fa-crown' : 
+                               session.role === 'super' ? 'fa-user-shield' : 'fa-users';
+                badge.innerHTML = `<i class="fas ${roleIcon}"></i><span>${getRoleName(session.role).toUpperCase()}</span>`;
+            }
+        });
+    </script>
+</body>
+</html>
