@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XGaming - Casino Admin Panel</title>
+    <title>XGaming - Master Admin Panel</title>
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,21 +15,37 @@
             <div class="admin-nav">
                 <div class="admin-logo">
                     <i class="fas fa-crown"></i>
-                    <span>XGaming Casino Admin</span>
+                    <span>XGaming Master Admin</span>
+                    <span class="version">v2.0</span>
                 </div>
                 <div class="admin-actions">
                     <div class="admin-info">
-                        <span class="admin-name">Super Admin</span>
-                        <span class="admin-role">Administrator</span>
+                        <span class="admin-name" id="current-admin-name">Super Admin</span>
+                        <span class="admin-role" id="current-admin-role">Master Administrator</span>
                     </div>
-                    <a href="index.html" class="btn-view-site">
-                        <i class="fas fa-external-link-alt"></i>
-                        Main Site
-                    </a>
-                    <button class="btn-logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </button>
+                    <div class="admin-controls">
+                        <button class="btn-notification" onclick="showNotifications()">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-count">3</span>
+                        </button>
+                        <a href="index.html" class="btn-view-site">
+                            <i class="fas fa-external-link-alt"></i>
+                            Main Site
+                        </a>
+                        <div class="admin-dropdown">
+                            <button class="btn-admin-menu">
+                                <i class="fas fa-user-shield"></i>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="#" onclick="switchAdminRole('super')"><i class="fas fa-user-cog"></i> Super Admin</a>
+                                <a href="#" onclick="switchAdminRole('master')"><i class="fas fa-user-shield"></i> Master Admin</a>
+                                <a href="#" onclick="switchAdminRole('affiliate')"><i class="fas fa-users"></i> Affiliate Manager</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -37,34 +53,104 @@
 
     <!-- Admin Sidebar -->
     <nav class="admin-sidebar">
+        <div class="sidebar-header">
+            <div class="admin-level-badge" id="admin-level-badge">
+                <i class="fas fa-crown"></i>
+                <span>MASTER</span>
+            </div>
+        </div>
+        
         <div class="sidebar-menu">
+            <!-- Dashboard -->
             <a href="#dashboard" class="menu-item active" onclick="showSection('dashboard')">
                 <i class="fas fa-tachometer-alt"></i>
                 <span>ড্যাশবোর্ড</span>
             </a>
+
+            <!-- User Management -->
+            <div class="menu-category">ইউজার ম্যানেজমেন্ট</div>
             <a href="#users" class="menu-item" onclick="showSection('users')">
                 <i class="fas fa-users"></i>
-                <span>ইউজার ম্যানেজমেন্ট</span>
+                <span>সব ইউজার</span>
+                <span class="menu-badge" id="users-count">0</span>
             </a>
+            <a href="#agents" class="menu-item" onclick="showSection('agents')">
+                <i class="fas fa-user-tie"></i>
+                <span>এজেন্টস</span>
+            </a>
+            <a href="#affiliates" class="menu-item" onclick="showSection('affiliates')">
+                <i class="fas fa-handshake"></i>
+                <span>অ্যাফিলিয়েটস</span>
+            </a>
+
+            <!-- Financial Management -->
+            <div class="menu-category">ফাইন্যান্সিয়াল</div>
             <a href="#transactions" class="menu-item" onclick="showSection('transactions')">
                 <i class="fas fa-exchange-alt"></i>
-                <span>ট্রানজেকশন</span>
+                <span>ট্রানজেকশনস</span>
             </a>
+            <a href="#deposits" class="menu-item" onclick="showSection('deposits')">
+                <i class="fas fa-wallet"></i>
+                <span>ডিপোজিটস</span>
+                <span class="menu-badge pending" id="pending-deposits">0</span>
+            </a>
+            <a href="#withdrawals" class="menu-item" onclick="showSection('withdrawals')">
+                <i class="fas fa-money-check"></i>
+                <span>উইথড্রয়ালস</span>
+                <span class="menu-badge pending" id="pending-withdrawals">0</span>
+            </a>
+            <a href="#commission" class="menu-item" onclick="showSection('commission')">
+                <i class="fas fa-percentage"></i>
+                <span>কমিশন</span>
+            </a>
+
+            <!-- Game Management -->
+            <div class="menu-category">গেম ম্যানেজমেন্ট</div>
             <a href="#games" class="menu-item" onclick="showSection('games')">
                 <i class="fas fa-gamepad"></i>
-                <span>গেমস ম্যানেজমেন্ট</span>
+                <span>সব গেমস</span>
             </a>
+            <a href="#game-providers" class="menu-item" onclick="showSection('game-providers')">
+                <i class="fas fa-puzzle-piece"></i>
+                <span>গেম প্রোভাইডার</span>
+            </a>
+            <a href="#tournaments" class="menu-item" onclick="showSection('tournaments')">
+                <i class="fas fa-trophy"></i>
+                <span>টুর্নামেন্টস</span>
+            </a>
+
+            <!-- Marketing -->
+            <div class="menu-category">মার্কেটিং</div>
             <a href="#bonus" class="menu-item" onclick="showSection('bonus')">
                 <i class="fas fa-gift"></i>
                 <span>বোনাস ম্যানেজমেন্ট</span>
             </a>
+            <a href="#promotions" class="menu-item" onclick="showSection('promotions')">
+                <i class="fas fa-bullhorn"></i>
+                <span>প্রোমোশনস</span>
+            </a>
+            <a href="#affiliate-program" class="menu-item" onclick="showSection('affiliate-program')">
+                <i class="fas fa-network-wired"></i>
+                <span>অ্যাফিলিয়েট প্রোগ্রাম</span>
+            </a>
+
+            <!-- System -->
+            <div class="menu-category">সিস্টেম</div>
             <a href="#reports" class="menu-item" onclick="showSection('reports')">
                 <i class="fas fa-chart-bar"></i>
-                <span>রিপোর্টস</span>
+                <span>রিপোর্টস & এনালিটিক্স</span>
+            </a>
+            <a href="#admin-management" class="menu-item" onclick="showSection('admin-management')">
+                <i class="fas fa-user-shield"></i>
+                <span>এডমিন ম্যানেজমেন্ট</span>
             </a>
             <a href="#settings" class="menu-item" onclick="showSection('settings')">
                 <i class="fas fa-cogs"></i>
-                <span>সেটিংস</span>
+                <span>সিস্টেম সেটিংস</span>
+            </a>
+            <a href="#api" class="menu-item" onclick="showSection('api')">
+                <i class="fas fa-code"></i>
+                <span>API ম্যানেজমেন্ট</span>
             </a>
         </div>
     </nav>
@@ -75,50 +161,146 @@
             <!-- Dashboard Section -->
             <section id="dashboard" class="admin-section active">
                 <div class="section-header">
-                    <h1>ড্যাশবোর্ড ওভারভিউ</h1>
-                    <p>রিয়েল-টাইম ক্যাসিনো পারফরম্যান্স</p>
+                    <h1>মাস্টার ড্যাশবোর্ড</h1>
+                    <p>রিয়েল-টাইম ক্যাসিনো পারফরম্যান্স ওভারভিউ</p>
+                    <div class="time-display" id="live-time"></div>
                 </div>
 
-                <!-- Stats Cards -->
+                <!-- Quick Stats -->
+                <div class="quick-stats">
+                    <div class="quick-stat">
+                        <i class="fas fa-users"></i>
+                        <div>
+                            <h3 id="total-active-users">0</h3>
+                            <span>অ্যাক্টিভ ইউজার</span>
+                        </div>
+                    </div>
+                    <div class="quick-stat">
+                        <i class="fas fa-gamepad"></i>
+                        <div>
+                            <h3 id="total-active-games">0</h3>
+                            <span>অ্যাক্টিভ গেমস</span>
+                        </div>
+                    </div>
+                    <div class="quick-stat">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <div>
+                            <h3 id="total-revenue-today">₳ 0</h3>
+                            <span>আজকের রেভিনিউ</span>
+                        </div>
+                    </div>
+                    <div class="quick-stat">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h3 id="total-admins">0</h3>
+                            <span>অ্যাক্টিভ এডমিন</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
                 <div class="stats-grid">
+                    <!-- Revenue Card -->
                     <div class="stat-card revenue">
-                        <div class="stat-icon">
-                            <i class="fas fa-money-bill-wave"></i>
+                        <div class="stat-header">
+                            <h3>রেভিনিউ</h3>
+                            <div class="stat-trend up">+15.2%</div>
                         </div>
-                        <div class="stat-info">
-                            <h3 id="total-revenue">₳ 0</h3>
-                            <span>টোটাল রেভিনিউ</span>
-                            <div class="stat-trend up">+12%</div>
+                        <div class="stat-main">
+                            <h2 id="total-revenue">₳ 0</h2>
+                            <p>মোট রেভিনিউ</p>
+                        </div>
+                        <div class="stat-breakdown">
+                            <div class="breakdown-item">
+                                <span>স্লটস</span>
+                                <span id="slot-revenue">₳ 0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>লাইভ ক্যাসিনো</span>
+                                <span id="live-revenue">₳ 0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>স্পোর্টস</span>
+                                <span id="sports-revenue">₳ 0</span>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Users Card -->
                     <div class="stat-card users">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
+                        <div class="stat-header">
+                            <h3>ইউজারস</h3>
+                            <div class="stat-trend up">+8.7%</div>
                         </div>
-                        <div class="stat-info">
-                            <h3 id="total-users">0</h3>
-                            <span>রেজিস্টার্ড ইউজার</span>
-                            <div class="stat-trend up">+5%</div>
+                        <div class="stat-main">
+                            <h2 id="total-users">0</h2>
+                            <p>মোট রেজিস্টার্ড ইউজার</p>
+                        </div>
+                        <div class="stat-breakdown">
+                            <div class="breakdown-item">
+                                <span>নতুন আজ</span>
+                                <span id="new-users-today">0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>অ্যাক্টিভ</span>
+                                <span id="active-users-now">0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>ভিআইপি</span>
+                                <span id="vip-users">0</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="stat-card deposits">
-                        <div class="stat-icon">
-                            <i class="fas fa-wallet"></i>
+
+                    <!-- Financial Card -->
+                    <div class="stat-card financial">
+                        <div class="stat-header">
+                            <h3>ফাইন্যান্স</h3>
+                            <div class="stat-trend up">+12.3%</div>
                         </div>
-                        <div class="stat-info">
-                            <h3 id="total-deposits">₳ 0</h3>
-                            <span>টোটাল ডিপোজিট</span>
-                            <div class="stat-trend up">+8%</div>
+                        <div class="stat-main">
+                            <h2 id="total-deposits">₳ 0</h2>
+                            <p>মোট ডিপোজিট</p>
+                        </div>
+                        <div class="stat-breakdown">
+                            <div class="breakdown-item">
+                                <span>ডিপোজিট</span>
+                                <span id="today-deposits">₳ 0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>উইথড্র</span>
+                                <span id="today-withdrawals">₳ 0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>ব্যালেন্স</span>
+                                <span id="total-balance">₳ 0</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="stat-card withdrawals">
-                        <div class="stat-icon">
-                            <i class="fas fa-money-check"></i>
+
+                    <!-- System Card -->
+                    <div class="stat-card system">
+                        <div class="stat-header">
+                            <h3>সিস্টেম</h3>
+                            <div class="stat-status online">Online</div>
                         </div>
-                        <div class="stat-info">
-                            <h3 id="total-withdrawals">₳ 0</h3>
-                            <span>টোটাল উইথড্র</span>
-                            <div class="stat-trend down">-3%</div>
+                        <div class="stat-main">
+                            <h2 id="system-uptime">99.9%</h2>
+                            <p>সার্ভার আপটাইম</p>
+                        </div>
+                        <div class="stat-breakdown">
+                            <div class="breakdown-item">
+                                <span>গেম সার্ভার</span>
+                                <span class="status online">Online</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>পেমেন্ট</span>
+                                <span class="status online">Online</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>ডাটাবেজ</span>
+                                <span class="status online">Online</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -139,26 +321,43 @@
                             <i class="fas fa-minus-circle"></i>
                             <span>ম্যানুয়াল উইথড্র</span>
                         </button>
-                        <button class="action-btn" onclick="addNewGame()">
-                            <i class="fas fa-dice"></i>
-                            <span>নতুন গেম</span>
-                        </button>
                         <button class="action-btn" onclick="createBonus()">
                             <i class="fas fa-gift"></i>
                             <span>বোনাস তৈরি</span>
+                        </button>
+                        <button class="action-btn" onclick="addNewGame()">
+                            <i class="fas fa-dice"></i>
+                            <span>নতুন গেম</span>
                         </button>
                         <button class="action-btn" onclick="generateReport()">
                             <i class="fas fa-file-export"></i>
                             <span>রিপোর্ট জেনারেট</span>
                         </button>
+                        <button class="action-btn" onclick="createAdmin()">
+                            <i class="fas fa-user-shield"></i>
+                            <span>নতুন এডমিন</span>
+                        </button>
+                        <button class="action-btn" onclick="systemBackup()">
+                            <i class="fas fa-database"></i>
+                            <span>সিস্টেম ব্যাকআপ</span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Recent Activity -->
-                <div class="recent-activity">
-                    <h3>সাম্প্রতিক এক্টিভিটি</h3>
-                    <div class="activity-list" id="activity-list">
-                        <!-- Activities will be loaded here -->
+                <!-- Recent Activity & Notifications -->
+                <div class="dashboard-row">
+                    <div class="recent-activity">
+                        <h3>সাম্প্রতিক এক্টিভিটি</h3>
+                        <div class="activity-list" id="activity-list">
+                            <!-- Activities will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="system-notifications">
+                        <h3>সিস্টেম নোটিফিকেশন</h3>
+                        <div class="notification-list" id="notification-list">
+                            <!-- Notifications will be loaded here -->
+                        </div>
                     </div>
                 </div>
             </section>
@@ -176,6 +375,33 @@
                             <i class="fas fa-download"></i>
                             এক্সপোর্ট
                         </button>
+                        <button class="btn-warning" onclick="bulkAction()">
+                            <i class="fas fa-tasks"></i>
+                            বাল্ক অ্যাকশন
+                        </button>
+                    </div>
+                </div>
+
+                <!-- User Filters -->
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <input type="text" placeholder="ইউজারনেম বা ইমেইল..." id="user-search">
+                        <select id="user-status">
+                            <option value="all">সব স্ট্যাটাস</option>
+                            <option value="active">অ্যাক্টিভ</option>
+                            <option value="suspended">সাসপেন্ডেড</option>
+                            <option value="vip">ভিআইপি</option>
+                        </select>
+                        <select id="user-level">
+                            <option value="all">সব লেভেল</option>
+                            <option value="standard">স্ট্যান্ডার্ড</option>
+                            <option value="premium">প্রিমিয়াম</option>
+                            <option value="vip">ভিআইপি</option>
+                        </select>
+                        <button class="btn-primary" onclick="filterUsers()">
+                            <i class="fas fa-filter"></i>
+                            ফিল্টার
+                        </button>
                     </div>
                 </div>
 
@@ -183,11 +409,14 @@
                     <table>
                         <thead>
                             <tr>
+                                <th><input type="checkbox" id="select-all-users"></th>
                                 <th>ইউজার আইডি</th>
                                 <th>ইউজারনেম</th>
                                 <th>ব্যালেন্স</th>
+                                <th>লেভেল</th>
                                 <th>স্ট্যাটাস</th>
                                 <th>রেজিস্টার ডেট</th>
+                                <th>লাস্ট লগিন</th>
                                 <th>একশনস</th>
                             </tr>
                         </thead>
@@ -196,74 +425,122 @@
                         </tbody>
                     </table>
                 </div>
-            </section>
 
-            <!-- Transactions Section -->
-            <section id="transactions" class="admin-section">
-                <div class="section-header">
-                    <h1>ট্রানজেকশন ম্যানেজমেন্ট</h1>
-                    <div class="filter-options">
-                        <select id="transaction-type">
-                            <option value="all">সব ট্রানজেকশন</option>
-                            <option value="deposit">ডিপোজিট</option>
-                            <option value="withdrawal">উইথড্র</option>
-                            <option value="bonus">বোনাস</option>
-                        </select>
-                        <input type="date" id="transaction-date">
-                        <button class="btn-primary" onclick="filterTransactions()">
-                            <i class="fas fa-filter"></i>
-                            ফিল্টার
-                        </button>
-                    </div>
-                </div>
-
-                <div class="transactions-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ট্রানজেকশন আইডি</th>
-                                <th>ইউজার</th>
-                                <th>টাইপ</th>
-                                <th>অ্যামাউন্ট</th>
-                                <th>স্ট্যাটাস</th>
-                                <th>ডেট</th>
-                                <th>একশনস</th>
-                            </tr>
-                        </thead>
-                        <tbody id="transactions-table-body">
-                            <!-- Transactions will be loaded here -->
-                        </tbody>
-                    </table>
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="page-btn" onclick="previousPage()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span class="page-info" id="page-info">Page 1 of 1</span>
+                    <button class="page-btn" onclick="nextPage()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </section>
 
-            <!-- Add more sections for Games, Bonus, Reports, Settings -->
+            <!-- Add other sections similarly... -->
+
         </div>
     </main>
 
     <!-- Modals -->
     <div id="userModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content large">
             <span class="close" onclick="closeUserModal()">&times;</span>
             <h2>নতুন ইউজার তৈরি করুন</h2>
             <form id="userForm">
-                <div class="form-group">
-                    <label for="username">ইউজারনেম</label>
-                    <input type="text" id="username" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="username">ইউজারনেম *</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">ইমেইল *</label>
+                        <input type="email" id="email" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">ইমেইল</label>
-                    <input type="email" id="email" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">ফোন নাম্বার</label>
+                        <input type="tel" id="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="initialBalance">ইনিশিয়াল ব্যালেন্স</label>
+                        <input type="number" id="initialBalance" value="0">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="initialBalance">ইনিশিয়াল ব্যালেন্স</label>
-                    <input type="number" id="initialBalance" value="0">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="userLevel">ইউজার লেভেল</label>
+                        <select id="userLevel">
+                            <option value="standard">স্ট্যান্ডার্ড</option>
+                            <option value="premium">প্রিমিয়াম</option>
+                            <option value="vip">ভিআইপি</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="affiliateCode">অ্যাফিলিয়েট কোড</label>
+                        <input type="text" id="affiliateCode">
+                    </div>
                 </div>
                 <div class="form-actions">
-                    <button type="button" onclick="closeUserModal()">বাতিল</button>
-                    <button type="submit">সেভ করুন</button>
+                    <button type="button" class="btn-secondary" onclick="closeUserModal()">বাতিল</button>
+                    <button type="submit" class="btn-primary">ইউজার তৈরি করুন</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Admin Management Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAdminModal()">&times;</span>
+            <h2>নতুন এডমিন তৈরি করুন</h2>
+            <form id="adminForm">
+                <div class="form-group">
+                    <label for="adminUsername">ইউজারনেম *</label>
+                    <input type="text" id="adminUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminEmail">ইমেইল *</label>
+                    <input type="email" id="adminEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminRole">এডমিন রোল *</label>
+                    <select id="adminRole" required>
+                        <option value="super">সুপার এডমিন</option>
+                        <option value="master">মাস্টার এডমিন</option>
+                        <option value="affiliate">অ্যাফিলিয়েট ম্যানেজার</option>
+                        <option value="support">সাপোর্ট এজেন্ট</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="adminPermissions">পারমিশনস</label>
+                    <div class="permissions-grid">
+                        <label><input type="checkbox" name="permissions" value="user_manage"> ইউজার ম্যানেজ</label>
+                        <label><input type="checkbox" name="permissions" value="financial_manage"> ফাইন্যান্সিয়াল</label>
+                        <label><input type="checkbox" name="permissions" value="game_manage"> গেম ম্যানেজ</label>
+                        <label><input type="checkbox" name="permissions" value="system_manage"> সিস্টেম</label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeAdminModal()">বাতিল</button>
+                    <button type="submit" class="btn-primary">এডমিন তৈরি করুন</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div id="notificationPanel" class="notification-panel">
+        <div class="notification-header">
+            <h3>নোটিফিকেশনস</h3>
+            <button class="btn-close" onclick="hideNotifications()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notification-list" id="notification-panel-list">
+            <!-- Notifications will be loaded here -->
         </div>
     </div>
 
