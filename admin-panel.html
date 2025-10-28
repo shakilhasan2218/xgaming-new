@@ -1,561 +1,458 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XGaming - Master Admin Panel</title>
+    <title>XGaming - Admin Panel</title>
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="admin-body">
-    <!-- Security Check Script -->
-    <script>
-        const adminSession = localStorage.getItem('adminSession');
-        if (!adminSession) {
-            window.location.href = 'admin-login.html';
-        }
-
-        const session = JSON.parse(adminSession);
-        const loginTime = new Date(session.loginTime);
-        const currentTime = new Date();
-        const hoursDiff = (currentTime - loginTime) / (1000 * 60 * 60);
-
-        if (hoursDiff > 8) {
-            localStorage.removeItem('adminSession');
-            window.location.href = 'admin-login.html';
-        }
-
-        function logout() {
-            localStorage.removeItem('adminSession');
-            window.location.href = 'admin-login.html';
-        }
-    </script>
-
-    <!-- Admin Header -->
-    <header class="admin-header">
-        <div class="container">
-            <div class="admin-nav">
-                <div class="admin-logo">
-                    <i class="fas fa-crown"></i>
-                    <span>XGaming Master Admin</span>
-                    <span class="version">v3.0</span>
-                </div>
-                <div class="admin-actions">
-                    <div class="admin-info">
-                        <span class="admin-name" id="current-admin-name">Loading...</span>
-                        <span class="admin-role" id="current-admin-role">Master Admin</span>
-                    </div>
-                    <div class="admin-controls">
-                        <button class="btn-notification" onclick="showNotifications()">
-                            <i class="fas fa-bell"></i>
-                            <span class="notification-count" id="notification-count">5</span>
-                        </button>
-                        <button class="btn-logout" onclick="logout()">
-                            <i class="fas fa-sign-out-alt"></i>
-                            Logout
-                        </button>
-                    </div>
-                </div>
+<body>
+    <!-- Toggle Button for Mobile -->
+    <button class="toggle-btn" id="toggleSidebar">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <h2>XGaming Admin</h2>
+        </div>
+        <div class="nav-menu">
+            <div class="nav-item active" data-target="dashboard">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item" data-target="downline">
+                <i class="fas fa-sitemap"></i>
+                <span>Downline List</span>
+            </div>
+            <div class="nav-item" data-target="account">
+                <i class="fas fa-user"></i>
+                <span>My Account</span>
+            </div>
+            <div class="nav-item" data-target="report">
+                <i class="fas fa-chart-bar"></i>
+                <span>My Report</span>
+            </div>
+            <div class="nav-item" data-target="betlist">
+                <i class="fas fa-list"></i>
+                <span>BetList</span>
+            </div>
+            <div class="nav-item" data-target="betlist-live">
+                <i class="fas fa-play-circle"></i>
+                <span>BetList Live</span>
+            </div>
+            <div class="nav-item" data-target="risk">
+                <i class="fas fa-shield-alt"></i>
+                <span>Risk Management</span>
+            </div>
+            <div class="nav-item" data-target="banks">
+                <i class="fas fa-university"></i>
+                <span>Add Banks</span>
+            </div>
+            <div class="nav-item" data-target="commission">
+                <i class="fas fa-percentage"></i>
+                <span>Commission</span>
+            </div>
+            <div class="nav-item" data-target="wallet">
+                <i class="fas fa-wallet"></i>
+                <span>Wallet Management</span>
+            </div>
+            <div class="nav-item" data-target="bkash-sms">
+                <i class="fas fa-comment-dollar"></i>
+                <span>Bkash SMS</span>
+            </div>
+            <div class="nav-item" data-target="nagad-sms">
+                <i class="fas fa-comment-alt"></i>
+                <span>Nagad SMS</span>
+            </div>
+            <div class="nav-item" data-target="rocket-sms">
+                <i class="fas fa-rocket"></i>
+                <span>Rocket SMS</span>
+            </div>
+            <div class="nav-item" data-target="block-market">
+                <i class="fas fa-ban"></i>
+                <span>Block Market</span>
+            </div>
+            <div class="nav-item" data-target="support">
+                <i class="fas fa-headset"></i>
+                <span>Customer Support</span>
+            </div>
+            <div class="nav-item" data-target="game-setting">
+                <i class="fas fa-gamepad"></i>
+                <span>Game Setting</span>
+            </div>
+            <div class="nav-item" data-target="admin-setting">
+                <i class="fas fa-cogs"></i>
+                <span>Admin Setting</span>
+            </div>
+            <div class="nav-item" data-target="logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
             </div>
         </div>
-    </header>
-
-    <!-- Admin Sidebar -->
-    <nav class="admin-sidebar">
-        <div class="sidebar-header">
-            <div class="admin-level-badge">
-                <i class="fas fa-user-shield"></i>
-                <span>MASTER ADMIN</span>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1 id="page-title">Dashboard</h1>
+            <div class="user-info">
+                <img src="https://ui-avatars.com/api/?name=Admin+User&background=0f3460&color=fff" alt="Admin">
+                <span>Admin User</span>
             </div>
         </div>
         
-        <div class="sidebar-menu">
-            <!-- Main Sections -->
-            <a href="#dashboard" class="menu-item active" onclick="showSection('dashboard')">
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Dashboard</span>
-            </a>
-
-            <a href="#downline-list" class="menu-item" onclick="showSection('downline-list')">
-                <i class="fas fa-sitemap"></i>
-                <span>Downline List</span>
-                <span class="menu-badge">45</span>
-            </a>
-
-            <a href="#my-account" class="menu-item" onclick="showSection('my-account')">
-                <i class="fas fa-user-circle"></i>
-                <span>My Account</span>
-            </a>
-
-            <a href="#my-report" class="menu-item" onclick="showSection('my-report')">
-                <i class="fas fa-chart-line"></i>
-                <span>My Report</span>
-            </a>
-
-            <!-- Bet Management -->
-            <div class="menu-category">Bet Management</div>
-            <a href="#bet-list" class="menu-item" onclick="showSection('bet-list')">
-                <i class="fas fa-list"></i>
-                <span>Bet List</span>
-                <span class="menu-badge pending">12</span>
-            </a>
-
-            <a href="#bet-list-live" class="menu-item" onclick="showSection('bet-list-live')">
-                <i class="fas fa-broadcast-tower"></i>
-                <span>Bet List Live</span>
-                <span class="menu-badge live">LIVE</span>
-            </a>
-
-            <!-- Financial Management -->
-            <div class="menu-category">Financial Management</div>
-            <a href="#risk-management" class="menu-item" onclick="showSection('risk-management')">
-                <i class="fas fa-shield-alt"></i>
-                <span>Risk Management</span>
-            </a>
-
-            <a href="#add-banks" class="menu-item" onclick="showSection('add-banks')">
-                <i class="fas fa-university"></i>
-                <span>Add Banks</span>
-            </a>
-
-            <a href="#commission" class="menu-item" onclick="showSection('commission')">
-                <i class="fas fa-percentage"></i>
-                <span>Commission</span>
-            </a>
-
-            <a href="#wallet-management" class="menu-item" onclick="showSection('wallet-management')">
-                <i class="fas fa-wallet"></i>
-                <span>Wallet Management</span>
-            </a>
-
-            <!-- SMS Gateway -->
-            <div class="menu-category">SMS Gateway</div>
-            <a href="#bkash-sms" class="menu-item" onclick="showSection('bkash-sms')">
-                <i class="fas fa-mobile-alt"></i>
-                <span>bKash SMS</span>
-            </a>
-
-            <a href="#nagad-sms" class="menu-item" onclick="showSection('nagad-sms')">
-                <i class="fas fa-sms"></i>
-                <span>Nagad SMS</span>
-            </a>
-
-            <a href="#rocket-sms" class="menu-item" onclick="showSection('rocket-sms')">
-                <i class="fas fa-rocket"></i>
-                <span>Rocket SMS</span>
-            </a>
-
-            <!-- System Management -->
-            <div class="menu-category">System Management</div>
-            <a href="#block-market" class="menu-item" onclick="showSection('block-market')">
-                <i class="fas fa-ban"></i>
-                <span>Block Market</span>
-            </a>
-
-            <a href="#customer-support" class="menu-item" onclick="showSection('customer-support')">
-                <i class="fas fa-headset"></i>
-                <span>Customer Support</span>
-                <span class="menu-badge">8</span>
-            </a>
-
-            <a href="#game-setting" class="menu-item" onclick="showSection('game-setting')">
-                <i class="fas fa-gamepad"></i>
-                <span>Game Setting</span>
-            </a>
-
-            <a href="#admin-setting" class="menu-item" onclick="showSection('admin-setting')">
-                <i class="fas fa-cogs"></i>
-                <span>Admin Setting</span>
-            </a>
+        <!-- Dashboard Section -->
+        <div class="content-section active" id="dashboard">
+            <h2 class="section-title">Dashboard Overview</h2>
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3>Total Users</h3>
+                    <div class="value">1,254</div>
+                </div>
+                <div class="card">
+                    <h3>Active Bets</h3>
+                    <div class="value">342</div>
+                </div>
+                <div class="card">
+                    <h3>Today's Profit</h3>
+                    <div class="value">$12,450</div>
+                </div>
+                <div class="card">
+                    <h3>Pending Withdrawals</h3>
+                    <div class="value">23</div>
+                </div>
+            </div>
+            
+            <div class="recent-activity">
+                <h3 class="section-title">Recent Activity</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Action</th>
+                            <th>Amount</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>user123</td>
+                            <td>Deposit</td>
+                            <td>$500</td>
+                            <td>10:25 AM</td>
+                            <td><span class="status active">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>user456</td>
+                            <td>Withdrawal</td>
+                            <td>$250</td>
+                            <td>10:15 AM</td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>user789</td>
+                            <td>Bet Placed</td>
+                            <td>$100</td>
+                            <td>10:05 AM</td>
+                            <td><span class="status active">Won</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="admin-main">
-        <div class="container">
-            <!-- Dashboard Section -->
-            <section id="dashboard" class="admin-section active">
-                <div class="section-header">
-                    <h1>Dashboard Overview</h1>
-                    <p>Real-time system performance and analytics</p>
-                    <div class="time-display" id="live-time"></div>
-                </div>
-
-                <!-- Quick Stats -->
-                <div class="quick-stats">
-                    <div class="quick-stat">
-                        <i class="fas fa-users"></i>
-                        <div>
-                            <h3 id="total-users">1,560</h3>
-                            <span>Total Users</span>
-                        </div>
-                    </div>
-                    <div class="quick-stat">
-                        <i class="fas fa-coins"></i>
-                        <div>
-                            <h3 id="total-balance">₳ 2,45,800</h3>
-                            <span>Total Balance</span>
-                        </div>
-                    </div>
-                    <div class="quick-stat">
-                        <i class="fas fa-money-bill-wave"></i>
-                        <div>
-                            <h3 id="today-profit">₳ 45,230</h3>
-                            <span>Today's Profit</span>
-                        </div>
-                    </div>
-                    <div class="quick-stat">
-                        <i class="fas fa-exchange-alt"></i>
-                        <div>
-                            <h3 id="total-transactions">1,245</h3>
-                            <span>Today's Transactions</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Main Stats Grid -->
-                <div class="stats-grid">
-                    <div class="stat-card revenue">
-                        <div class="stat-header">
-                            <h3>Revenue Analytics</h3>
-                            <div class="stat-trend up">+15.2%</div>
-                        </div>
-                        <div class="stat-main">
-                            <h2>₳ 12,45,800</h2>
-                            <p>Total Revenue</p>
-                        </div>
-                        <div class="stat-breakdown">
-                            <div class="breakdown-item">
-                                <span>Sports Betting</span>
-                                <span>₳ 6,45,200</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span>Live Casino</span>
-                                <span>₳ 4,25,600</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span>Slot Games</span>
-                                <span>₳ 1,75,000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="stat-card users">
-                        <div class="stat-header">
-                            <h3>User Analytics</h3>
-                            <div class="stat-trend up">+8.7%</div>
-                        </div>
-                        <div class="stat-main">
-                            <h2>1,560</h2>
-                            <p>Registered Users</p>
-                        </div>
-                        <div class="stat-breakdown">
-                            <div class="breakdown-item">
-                                <span>Active Today</span>
-                                <span>456</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span>New Today</span>
-                                <span>23</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span>VIP Users</span>
-                                <span>45</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="stat-card financial">
-                        <div class="stat-header">
-                            <h3>Financial Summary</h3>
-                            <div class="stat-trend up">+12.3%</div>
-                        </div>
-                        <div class="stat-main">
-                            <h2>₳ 8,50,000</h2>
-                            <p>Total Deposits</p>
-                        </div>
-                        <div class="stat-breakdown">
-                            <div class="breakdown-item">
-                                <span>Today Deposit</span>
-                                <span>₳ 1,25,000</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span>Today Withdrawal</span>
-                                <span>₳ 85,000</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span>Pending WD</span>
-                                <span>₳ 25,000</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Activities -->
-                <div class="recent-activity">
-                    <h3>Recent Activities</h3>
-                    <div class="activity-list" id="activity-list">
-                        <div class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-user-plus"></i>
-                            </div>
-                            <div class="activity-content">
-                                <p>New user registered: john_doe</p>
-                                <small>2 minutes ago</small>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-wallet"></i>
-                            </div>
-                            <div class="activity-content">
-                                <p>Deposit completed: ₳50,000</p>
-                                <small>5 minutes ago</small>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-money-check"></i>
-                            </div>
-                            <div class="activity-content">
-                                <p>Withdrawal requested: ₳25,000</p>
-                                <small>10 minutes ago</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Downline List Section -->
-            <section id="downline-list" class="admin-section">
-                <div class="section-header">
-                    <h1>Downline List</h1>
-                    <p>Manage your network and commission structure</p>
-                </div>
-
-                <div class="filter-bar">
-                    <div class="filter-group">
-                        <input type="text" placeholder="Search user...">
-                        <select>
-                            <option>All Levels</option>
-                            <option>Level 1</option>
-                            <option>Level 2</option>
-                            <option>Level 3</option>
-                        </select>
-                        <select>
-                            <option>All Status</option>
-                            <option>Active</option>
-                            <option>Inactive</option>
-                        </select>
-                        <button class="btn-primary">
-                            <i class="fas fa-filter"></i>
-                            Filter
-                        </button>
-                    </div>
-                </div>
-
-                <div class="users-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>User ID</th>
-                                <th>Username</th>
-                                <th>Level</th>
-                                <th>Commission</th>
-                                <th>Total Bet</th>
-                                <th>Status</th>
-                                <th>Join Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>#1001</td>
-                                <td>agent_dhaka</td>
-                                <td>Level 1</td>
-                                <td>15%</td>
-                                <td>₳ 2,45,000</td>
-                                <td><span class="status-badge active">Active</span></td>
-                                <td>2024-01-15</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-sm btn-primary"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-sm btn-warning"><i class="fas fa-edit"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- Bet List Section -->
-            <section id="bet-list" class="admin-section">
-                <div class="section-header">
-                    <h1>Bet List</h1>
-                    <p>Manage all betting transactions</p>
-                </div>
-
-                <div class="filter-bar">
-                    <div class="filter-group">
-                        <select>
-                            <option>All Games</option>
-                            <option>Sports</option>
-                            <option>Live Casino</option>
-                            <option>Slots</option>
-                        </select>
-                        <select>
-                            <option>All Status</option>
-                            <option>Pending</option>
-                            <option>Won</option>
-                            <option>Lost</option>
-                        </select>
-                        <input type="date">
-                        <button class="btn-primary">
-                            <i class="fas fa-filter"></i>
-                            Filter
-                        </button>
-                    </div>
-                </div>
-
-                <div class="users-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Bet ID</th>
-                                <th>Username</th>
-                                <th>Game</th>
-                                <th>Amount</th>
-                                <th>Potential Win</th>
-                                <th>Status</th>
-                                <th>Time</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>#BET001</td>
-                                <td>player123</td>
-                                <td>Football - Premier League</td>
-                                <td>₳ 5,000</td>
-                                <td>₳ 8,500</td>
-                                <td><span class="status-badge pending">Pending</span></td>
-                                <td>2024-01-20 14:30</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-sm btn-success"><i class="fas fa-check"></i></button>
-                                        <button class="btn-sm btn-danger"><i class="fas fa-times"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- Add more sections for other menu items... -->
-
-            <!-- Wallet Management Section -->
-            <section id="wallet-management" class="admin-section">
-                <div class="section-header">
-                    <h1>Wallet Management</h1>
-                    <p>Manage user wallets and balances</p>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <h3>Total System Balance</h3>
-                        </div>
-                        <div class="stat-main">
-                            <h2>₳ 12,45,800</h2>
-                            <p>Across all user wallets</p>
-                        </div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <h3>Pending Withdrawals</h3>
-                        </div>
-                        <div class="stat-main">
-                            <h2>₳ 85,000</h2>
-                            <p>Awaiting approval</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="quick-actions">
-                    <h3>Quick Actions</h3>
-                    <div class="action-grid">
-                        <button class="action-btn" onclick="manualAdjustment()">
-                            <i class="fas fa-plus-circle"></i>
-                            <span>Manual Adjustment</span>
-                        </button>
-                        <button class="action-btn" onclick="bulkPayout()">
-                            <i class="fas fa-money-bill-wave"></i>
-                            <span>Bulk Payout</span>
-                        </button>
-                        <button class="action-btn" onclick="walletReport()">
-                            <i class="fas fa-file-export"></i>
-                            <span>Wallet Report</span>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SMS Gateway Sections -->
-            <section id="bkash-sms" class="admin-section">
-                <div class="section-header">
-                    <h1>bKash SMS Gateway</h1>
-                    <p>Configure bKash transaction SMS settings</p>
-                </div>
-                <!-- SMS configuration content -->
-            </section>
-
-            <!-- System Settings Sections -->
-            <section id="game-setting" class="admin-section">
-                <div class="section-header">
-                    <h1>Game Settings</h1>
-                    <p>Configure game parameters and limits</p>
-                </div>
-                <!-- Game settings content -->
-            </section>
-
+        
+        <!-- Downline List Section -->
+        <div class="content-section" id="downline">
+            <h2 class="section-title">Downline List</h2>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search downline users...">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Level</th>
+                        <th>Total Bets</th>
+                        <th>Commission</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>user_down1</td>
+                        <td>1</td>
+                        <td>45</td>
+                        <td>$125.50</td>
+                        <td><span class="status active">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>user_down2</td>
+                        <td>2</td>
+                        <td>32</td>
+                        <td>$89.75</td>
+                        <td><span class="status active">Active</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </main>
+        
+        <!-- My Account Section -->
+        <div class="content-section" id="account">
+            <h2 class="section-title">My Account</h2>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" class="form-control" value="admin_user" readonly>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" value="admin@xgaming.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Change Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Enter new password">
+            </div>
+            <button class="btn">Update Account</button>
+        </div>
+        
+        <!-- My Report Section -->
+        <div class="content-section" id="report">
+            <h2 class="section-title">My Report</h2>
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3>Total Commission</h3>
+                    <div class="value">$2,450</div>
+                </div>
+                <div class="card">
+                    <h3>This Month</h3>
+                    <div class="value">$850</div>
+                </div>
+                <div class="card">
+                    <h3>Active Downlines</h3>
+                    <div class="value">24</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- BetList Section -->
+        <div class="content-section" id="betlist">
+            <h2 class="section-title">Bet List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bet ID</th>
+                        <th>Username</th>
+                        <th>Market</th>
+                        <th>Stake</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>BET00123</td>
+                        <td>user123</td>
+                        <td>Cricket</td>
+                        <td>$50</td>
+                        <td><span class="status pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>BET00122</td>
+                        <td>user456</td>
+                        <td>Football</td>
+                        <td>$100</td>
+                        <td><span class="status active">Won</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- BetList Live Section -->
+        <div class="content-section" id="betlist-live">
+            <h2 class="section-title">Live Bet List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bet ID</th>
+                        <th>Username</th>
+                        <th>Event</th>
+                        <th>Stake</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>LIVE0023</td>
+                        <td>user101</td>
+                        <td>Man Utd vs Arsenal</td>
+                        <td>$80</td>
+                        <td>14:30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Risk Management Section -->
+        <div class="content-section" id="risk">
+            <h2 class="section-title">Risk Management</h2>
+            <div class="form-group">
+                <label for="max-bet">Maximum Bet Limit</label>
+                <input type="number" id="max-bet" class="form-control" value="1000">
+            </div>
+            <div class="form-group">
+                <label for="max-exposure">Maximum Exposure per Market</label>
+                <input type="number" id="max-exposure" class="form-control" value="5000">
+            </div>
+            <button class="btn">Update Risk Settings</button>
+        </div>
+        
+        <!-- Add Banks Section -->
+        <div class="content-section" id="banks">
+            <h2 class="section-title">Bank Accounts</h2>
+            <div class="form-group">
+                <label for="bank-name">Bank Name</label>
+                <input type="text" id="bank-name" class="form-control" placeholder="Enter bank name">
+            </div>
+            <div class="form-group">
+                <label for="account-number">Account Number</label>
+                <input type="text" id="account-number" class="form-control" placeholder="Enter account number">
+            </div>
+            <button class="btn">Add Bank Account</button>
+        </div>
+        
+        <!-- Commission Section -->
+        <div class="content-section" id="commission">
+            <h2 class="section-title">Commission Settings</h2>
+            <div class="form-group">
+                <label for="level1">Level 1 Commission (%)</label>
+                <input type="number" id="level1" class="form-control" value="5">
+            </div>
+            <div class="form-group">
+                <label for="level2">Level 2 Commission (%)</label>
+                <input type="number" id="level2" class="form-control" value="3">
+            </div>
+            <button class="btn">Update Commission</button>
+        </div>
+        
+        <!-- Wallet Management Section -->
+        <div class="content-section" id="wallet">
+            <h2 class="section-title">Wallet Management</h2>
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3>Main Wallet</h3>
+                    <div class="value">$45,250</div>
+                </div>
+                <div class="card">
+                    <h3>Reserve Wallet</h3>
+                    <div class="value">$15,000</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SMS Sections -->
+        <div class="content-section" id="bkash-sms">
+            <h2 class="section-title">Bkash SMS Settings</h2>
+            <div class="sms-section">
+                <div class="sms-card">
+                    <h3>Deposit SMS</h3>
+                    <div class="form-group">
+                        <label for="bkash-deposit-template">SMS Template</label>
+                        <textarea id="bkash-deposit-template" class="form-control" rows="4">You have received BDT {amount} from {sender}. TrxID: {trxid}. Balance: {balance}. -bKash</textarea>
+                    </div>
+                    <button class="btn">Update Settings</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section" id="nagad-sms">
+            <h2 class="section-title">Nagad SMS Settings</h2>
+            <!-- Similar to Bkash SMS -->
+        </div>
+        
+        <div class="content-section" id="rocket-sms">
+            <h2 class="section-title">Rocket SMS Settings</h2>
+            <!-- Similar to Bkash SMS -->
+        </div>
+        
+        <!-- Block Market Section -->
+        <div class="content-section" id="block-market">
+            <h2 class="section-title">Block Market</h2>
+            <div class="form-group">
+                <label for="market-select">Select Market to Block</label>
+                <select id="market-select" class="form-control">
+                    <option value="cricket">Cricket</option>
+                    <option value="football">Football</option>
+                </select>
+            </div>
+            <button class="btn">Block Market</button>
+        </div>
+        
+        <!-- Customer Support Section -->
+        <div class="content-section" id="support">
+            <h2 class="section-title">Customer Support</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>User</th>
+                        <th>Subject</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>TKT00123</td>
+                        <td>user123</td>
+                        <td>Withdrawal Issue</td>
+                        <td><span class="status pending">Open</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Game Setting Section -->
+        <div class="content-section" id="game-setting">
+            <h2 class="section-title">Game Settings</h2>
+            <div class="settings-grid">
+                <div class="setting-card">
+                    <h3>Sports Betting</h3>
+                    <div class="form-group">
+                        <label for="sports-min-bet">Minimum Bet</label>
+                        <input type="number" id="sports-min-bet" class="form-control" value="1">
+                    </div>
+                    <button class="btn">Update Settings</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Admin Setting Section -->
+        <div class="content-section" id="admin-setting">
+            <h2 class="section-title">Admin Settings</h2>
+            <div class="settings-grid">
+                <div class="setting-card">
+                    <h3>System Settings</h3>
+                    <div class="form-group">
+                        <label for="site-name">Site Name</label>
+                        <input type="text" id="site-name" class="form-control" value="XGaming">
+                    </div>
+                    <button class="btn">Update Settings</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Logout Section -->
+        <div class="content-section" id="logout">
+            <h2 class="section-title">Logout</h2>
+            <div style="text-align: center; padding: 40px;">
+                <i class="fas fa-sign-out-alt" style="font-size: 80px; color: var(--highlight); margin-bottom: 20px;"></i>
+                <h3>Are you sure you want to logout?</h3>
+                <button class="btn" style="background-color: var(--danger);">Logout Now</button>
+            </div>
+        </div>
+    </div>
 
     <script src="js/admin.js"></script>
-    
-    <!-- Initialize Admin Info -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('current-admin-name').textContent = session.username;
-            
-            // Update live time
-            function updateTime() {
-                const now = new Date();
-                document.getElementById('live-time').textContent = now.toLocaleString('bn-BD');
-            }
-            setInterval(updateTime, 1000);
-            updateTime();
-        });
-
-        function showSection(sectionId) {
-            document.querySelectorAll('.admin-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.querySelectorAll('.menu-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            document.getElementById(sectionId).classList.add('active');
-            document.querySelector(`[onclick="showSection('${sectionId}')"]`).classList.add('active');
-        }
-
-        function showNotifications() {
-            alert('Notification panel will be implemented soon!');
-        }
-    </script>
 </body>
 </html>
