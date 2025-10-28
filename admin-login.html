@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XGaming - Admin Login</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .login-logo {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+        
+        .login-subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .security-notice {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fef3c7;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #92400e;
+        }
+        
+        .error-message {
+            color: #dc2626;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-logo">
+                <i class="fas fa-crown"></i>
+            </div>
+            <h1 class="login-title">XGaming Admin Panel</h1>
+            <p class="login-subtitle">মাস্টার এডমিন এক্সেস</p>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> ইউজারনেম</label>
+                    <input type="text" id="username" placeholder="এডমিন ইউজারনেম" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> পাসওয়ার্ড</label>
+                    <input type="password" id="password" placeholder="এডমিন পাসওয়ার্ড" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="securityCode"><i class="fas fa-shield-alt"></i> সিকিউরিটি কোড</label>
+                    <input type="text" id="securityCode" placeholder="সিকিউরিটি কোড" required>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    লগইন করুন
+                </button>
+                
+                <div id="errorMessage" class="error-message">
+                    ভুল ইউজারনেম, পাসওয়ার্ড বা সিকিউরিটি কোড!
+                </div>
+            </form>
+            
+            <div class="security-notice">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>সিকিউরিটি নোটিশ:</strong> শুধুমাত্র অথোরাইজড পার্সনেলের জন্য
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin Credentials - আপনি এগুলো change করুন
+        const ADMIN_CREDENTIALS = [
+            {
+                username: "superadmin",
+                password: "SuperAdmin@2024",
+                securityCode: "XGAME123",
+                role: "master"
+            },
+            {
+                username: "admin",
+                password: "Admin@2024", 
+                securityCode: "XGAME456",
+                role: "super"
+            },
+            {
+                username: "affiliate",
+                password: "Affiliate@2024",
+                securityCode: "XGAME789", 
+                role: "affiliate"
+            }
+        ];
+
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const securityCode = document.getElementById('securityCode').value;
+            
+            // Validate credentials
+            const admin = ADMIN_CREDENTIALS.find(acc => 
+                acc.username === username && 
+                acc.password === password && 
+                acc.securityCode === securityCode
+            );
+            
+            if (admin) {
+                // Save admin session
+                localStorage.setItem('adminSession', JSON.stringify({
+                    username: admin.username,
+                    role: admin.role,
+                    loginTime: new Date().toISOString(),
+                    token: btoa(`${username}:${Date.now()}`)
+                }));
+                
+                // Redirect to admin panel
+                window.location.href = 'admin-panel.html';
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+                
+                // Clear form after 2 seconds
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 3000);
+            }
+        });
+
+        // Redirect if already logged in
+        if (localStorage.getItem('adminSession')) {
+            window.location.href = 'admin-panel.html';
+        }
+    </script>
+</body>
+</html>
